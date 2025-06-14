@@ -11,6 +11,8 @@ import static java.lang.Double.parseDouble;
 
 public class CambioBusca {
 
+    public double taxa;
+
     public CambioBusca(String moedaBase, String moedaAlvo, double valor) throws IOException {
         // Setting URL
         String link = "https://v6.exchangerate-api.com/v6/105f5eff3a4c417210842348/pair/" + moedaBase + "/" + moedaAlvo + "/" + valor;
@@ -26,9 +28,10 @@ public class CambioBusca {
         JsonObject jsonobj = root.getAsJsonObject();
 
 
+
         String taxaDeConversao = jsonobj.get("conversion_rate").getAsString();
         Double retornoDaConversao = converterValor(valor, taxaDeConversao);
-
+        this.taxa = parseDouble(taxaDeConversao);
         String convertido = jsonobj.get("conversion_result").getAsString();
         System.out.println("valor convertido de " + moedaBase + " para " + moedaAlvo + " é " + retornoDaConversao);
 
